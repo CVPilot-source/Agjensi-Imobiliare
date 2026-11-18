@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, jsonify
 from google import genai
 from google.genai import types
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "leads.db")
