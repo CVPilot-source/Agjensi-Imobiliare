@@ -6,9 +6,10 @@ from flask import Flask, render_template, request, jsonify
 from google import genai
 from google.genai import types
 
-app = Flask(__name__, template_folder=".")
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates") if os.path.exists(os.path.join(BASE_DIR, "templates", "index.html")) else BASE_DIR
+app = Flask(__name__, template_folder=TEMPLATE_DIR)
+
 DB_PATH = os.path.join(BASE_DIR, "leads.db")
 
 # Listime SHEMBULL (DEMO) - Te shenuara qarte si shembuj fiktive
@@ -365,12 +366,13 @@ def chat_with_ai():
                 )
 
         response = client.models.generate_content(
-            model="gemini-3.8-flash",
+            model="gemini-2.5-flash",
             contents=contents,
             config=types.GenerateContentConfig(
                 system_instruction=build_system_instruction(),
-        temperature=0.2,
-        max_output_tokens=2048,
+                temperature=0.2,
+                max_output_tokens=2048,
+                thinking_config=types.ThinkingConfig(thinking_budget=0),
             ),
         )
         reply_text = response.text or "Më falni, nuk munda të gjeneroj një përgjigje për momentin."
