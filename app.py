@@ -369,8 +369,8 @@ def chat_with_ai():
             contents=contents,
             config=types.GenerateContentConfig(
                 system_instruction=build_system_instruction(),
-                temperature=0.2,
-                max_output_tokens=450,
+        temperature=0.2,
+        max_output_tokens=2048,
             ),
         )
         reply_text = response.text or "Më falni, nuk munda të gjeneroj një përgjigje për momentin."
